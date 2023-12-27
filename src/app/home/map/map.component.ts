@@ -37,6 +37,8 @@ export class MapComponent implements OnInit, AfterViewInit {
         '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map);
 
-    L.marker([initialLocation.a, initialLocation.b]).addTo(map);
+    L.marker([initialLocation.a, initialLocation.b])
+      .addTo(map)
+      .bindPopup('text');
   }
 }
