@@ -1,10 +1,72 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { NgbTypeahead, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  Observable,
+  OperatorFunction,
+  Subject,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  merge,
+} from 'rxjs';
+import { BusStation } from 'src/app/models/busStation';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+  styleUrls: ['./form.component.css'],
 })
-export class FormComponent {
+export class FormComponent implements OnChanges {
+  form = new FormGroup({
+    tip: new FormControl('broj'),
+    broj: new FormControl(''),
+  });
+  searchNameStation?: string;
+  stationsNames: string[] = [];
 
+  constructor() {}
+
+  @ViewChild('inputByNameStation') inputByNameStation!: NgbTypeahead;
+  @Input() busStations: BusStation[] = [];
+
+  ngOnChanges(): void {
+    this.busStations.forEach((station) => {
+      this.stationsNames.push(station.name + ' ' + station.id);
+    });
+  }
+
+  focus$ = new Subject<string>();
+  click$ = new Subject<string>();
+  search: OperatorFunction<any, readonly any[]> = (text$: Observable<any>) => {
+    const debouncedText$ = text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged()
+    );
+    const clicksWithClosedPopup$ = this.click$.pipe(
+      filter(() => !this.inputByNameStation.isPopupOpen())
+    );
+    const inputFocus$ = this.focus$;
+
+    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+      map((term) =>
+        (term === ''
+          ? this.stationsNames
+          : this.stationsNames.filter(
+              (v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1
+            )
+        ).slice(0, 10)
+      )
+    );
+  };
+
+  onChangeForm() {}
 }

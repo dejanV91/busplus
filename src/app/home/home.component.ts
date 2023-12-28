@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BusplusService } from '../services/busplus.service';
+import { BusStation } from '../models/busStation';
 
 @Component({
   selector: 'app-home',
@@ -6,5 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  ngOnInit(): void {}
+  busStations: BusStation[] = [];
+  constructor(private service: BusplusService) {}
+
+  ngOnInit(): void {
+    this.service.getStations().subscribe({
+      next: (stations: BusStation[]) => {
+        this.busStations = stations;
+      },
+    });
+  }
 }

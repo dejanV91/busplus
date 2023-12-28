@@ -14,21 +14,11 @@ import { BusplusService } from 'src/app/services/busplus.service';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css'],
 })
-export class MapComponent implements OnInit, AfterViewInit {
-  busStations: BusStation[] = [];
-
+export class MapComponent implements AfterViewInit {
   @ViewChild('map')
   private mapContainer!: ElementRef<HTMLElement>;
 
-  constructor(private service: BusplusService) {}
-
-  ngOnInit(): void {
-    this.service.getStations().subscribe({
-      next: (stations: BusStation[]) => {
-        this.busStations = stations;
-      },
-    });
-  }
+  constructor() {}
 
   ngAfterViewInit(): void {
     let initialLocation = {
