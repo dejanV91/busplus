@@ -6,6 +6,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import * as L from 'leaflet';
+import { BusStation } from 'src/app/models/busStation';
+import { BusplusService } from 'src/app/services/busplus.service';
 
 @Component({
   selector: 'app-map',
@@ -13,12 +15,20 @@ import * as L from 'leaflet';
   styleUrls: ['./map.component.css'],
 })
 export class MapComponent implements OnInit, AfterViewInit {
+  busStations: BusStation[] = [];
+
   @ViewChild('map')
   private mapContainer!: ElementRef<HTMLElement>;
 
-  constructor() {}
+  constructor(private service: BusplusService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.service.getStations().subscribe({
+      next: (stations: BusStation[]) => {
+        this.busStations = stations;
+      },
+    });
+  }
 
   ngAfterViewInit(): void {
     let initialLocation = {
