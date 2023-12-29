@@ -1,13 +1,6 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { NgbTypeahead, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import {
   Observable,
   OperatorFunction,
@@ -26,12 +19,15 @@ import { BusStation } from 'src/app/models/busStation';
   styleUrls: ['./form.component.css'],
 })
 export class FormComponent implements OnChanges {
+  searchNameStation?: string;
+  stationsNames: string[] = [];
+  focus$ = new Subject<string>();
+  click$ = new Subject<string>();
+
   form = new FormGroup({
     tip: new FormControl('broj'),
     broj: new FormControl(''),
   });
-  searchNameStation?: string;
-  stationsNames: string[] = [];
 
   constructor() {}
 
@@ -40,13 +36,13 @@ export class FormComponent implements OnChanges {
 
   ngOnChanges(): void {
     this.busStations.forEach((station) => {
-      this.stationsNames.push(station.name + ' ' + station.id);
+      this.stationsNames.push(station.name + ' ' + '(' + station.id + ')');
     });
   }
 
-  focus$ = new Subject<string>();
-  click$ = new Subject<string>();
-  search: OperatorFunction<any, readonly any[]> = (text$: Observable<any>) => {
+  onSearchName: OperatorFunction<any, readonly any[]> = (
+    text$: Observable<any>
+  ) => {
     const debouncedText$ = text$.pipe(
       debounceTime(200),
       distinctUntilChanged()
@@ -55,7 +51,6 @@ export class FormComponent implements OnChanges {
       filter(() => !this.inputByNameStation.isPopupOpen())
     );
     const inputFocus$ = this.focus$;
-
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
       map((term) =>
         (term === ''

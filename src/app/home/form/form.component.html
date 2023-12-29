@@ -1,5 +1,5 @@
 <div class="container bg-light">
-  <div class="row">
+  <div class="row m-auto pb-4" style="max-width: 600px">
     <div class="col">
       <form (change)="onChangeForm()" [formGroup]="form">
         <div class="mb-3 pt-3 px-md-5 d-flex flex-column align-items-center">
@@ -22,26 +22,29 @@
           <input formControlName="broj" type="text" class="form-control" />
         </div>
         <!-- search by number of station END-->
+        <!-- search by name of station -->
+        <div
+          *ngIf="this.form.value.tip == 'naziv'"
+          class="d-flex flex-column align-items-center py-2 px-md-5"
+        >
+          <label for="typeahead-focus">Ime stanice:</label>
+          <input
+            style="max-width: 600px"
+            id="typeahead-focus"
+            type="text"
+            class="form-control"
+            [(ngModel)]="searchNameStation"
+            [ngbTypeahead]="onSearchName"
+            (focus)="focus$.next($any($event).target.value)"
+            (click)="click$.next($any($event).target.value)"
+            #inputByNameStation="ngbTypeahead"
+          />
+        </div>
+        <!-- search by name of station END-->
+        <div class="d-flex justify-content-center p-3">
+          <button type="button" class="btn btn-primary w-25">Traži</button>
+        </div>
       </form>
-
-      <!-- search by name of station -->
-      <div
-        *ngIf="this.form.value.tip == 'naziv'"
-        class="w-100 d-flex flex-column align-items-center px-md-5 py-2"
-      >
-        <label for="typeahead-focus">Ime stanice:</label>
-        <input
-          id="typeahead-focus"
-          type="text"
-          class="form-control w-50"
-          [(ngModel)]="searchNameStation"
-          [ngbTypeahead]="search"
-          (focus)="focus$.next($any($event).target.value)"
-          (click)="click$.next($any($event).target.value)"
-          #inputByNameStation="ngbTypeahead"
-        />
-      </div>
-      <!-- search by name of station END-->
     </div>
   </div>
 </div>
