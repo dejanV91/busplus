@@ -9,6 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import * as L from 'leaflet';
+import { Bus } from 'src/app/models/bus';
 import { BusStation } from 'src/app/models/busStation';
 import { BusStationWithBuses } from 'src/app/models/busStationWithBuses';
 import { BusplusService } from 'src/app/services/busplus.service';
@@ -39,14 +40,20 @@ export class MapComponent implements AfterViewInit,OnChanges {
 
   ngOnChanges(): void {
     if (this.busStationWithBuses.coords.length) {
+      //find station
       this.findStation(this.busStationWithBuses.coords[0],this.busStationWithBuses.coords[1]);
+
+     //find buses
+     this.busStationWithBuses.vehicles.forEach((bus:Bus)=>{
+      this.findBus(bus);
+     })
+     
 
     }
   }
 
   findStation(x:string,y:string){
     let stationIcon = markerColor('yellow');
-
     L.marker([
       Number(x),
       Number(y),
@@ -58,6 +65,21 @@ export class MapComponent implements AfterViewInit,OnChanges {
     ], 14);
   }
 
+  findBus(bus:Bus){
+    let stationIcon = markerColor('blue');
+    L.marker([
+      Number(bus.coords[0]),
+      Number(bus.coords[1]),
+    ],{icon:stationIcon})
+    .addTo(this.map)
+    .bindPopup(`${bus.lineNumber}`)
+    .bindTooltip(`${bus.lineNumber}`).openTooltip();
+
+    
+  }
+
+
+
   
 }
 
@@ -66,7 +88,7 @@ function markerColor(color:string){
     iconUrl:`../../../assets/images/icon${color}.png`, 
     iconSize: [25, 41],
     iconAnchor: [12, 41],
-    popupAnchor: [1, -14],
+    popupAnchor: [1, -30],
     shadowSize: [41, 41],
   });
 }
