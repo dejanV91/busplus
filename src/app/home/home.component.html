@@ -1,2 +1,3 @@
-<app-map></app-map>
-<app-form [busStations]="busStations"></app-form>
+<app-map [busStationWithBuses]="busStationWithBuses"></app-map>
+<app-form (brojStanice)="changeBrojStanice($event)" [busStations]="busStations"></app-form>
+<app-list></app-list>

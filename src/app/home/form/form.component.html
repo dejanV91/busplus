@@ -1,7 +1,7 @@
 <div class="container bg-light">
   <div class="row m-auto pb-4" style="max-width: 600px">
     <div class="col">
-      <form (change)="onChangeForm()" [formGroup]="form">
+      <form  [formGroup]="form">
         <div class="mb-3 pt-3 px-md-5 d-flex flex-column align-items-center">
           <label class="form-label fs-3">Tip pretrage:</label>
           <select
@@ -42,7 +42,7 @@
         </div>
         <!-- search by name of station END-->
         <div class="d-flex justify-content-center p-3">
-          <button type="button" class="btn btn-primary w-25">Traži</button>
+          <button (click)="onSubmit()" type="button" class="btn btn-primary w-25">Traži</button>
         </div>
       </form>
     </div>

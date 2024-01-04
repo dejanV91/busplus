@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -33,6 +33,8 @@ export class FormComponent implements OnChanges {
 
   @ViewChild('inputByNameStation') inputByNameStation!: NgbTypeahead;
   @Input() busStations: BusStation[] = [];
+  
+  @Output() brojStanice:EventEmitter<string>= new EventEmitter();
 
   ngOnChanges(): void {
     this.busStations.forEach((station) => {
@@ -58,10 +60,12 @@ export class FormComponent implements OnChanges {
           : this.stationsNames.filter(
               (v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1
             )
-        ).slice(0, 10)
+        ).slice(0, 5)
       )
     );
   };
 
-  onChangeForm() {}
+  onSubmit(){
+    this.brojStanice.emit(this.form.value.broj || '');
+  }
 }

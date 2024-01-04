@@ -9,9 +9,10 @@ import { MapComponent } from './home/map/map.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormComponent } from './home/form/form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ListComponent } from './home/list/list.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, MapComponent, FormComponent],
+  declarations: [AppComponent, HomeComponent, MapComponent, FormComponent, ListComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
