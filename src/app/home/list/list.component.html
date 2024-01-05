@@ -1,1 +1,16 @@
-<p>list works!</p>
+<table *ngIf="busStationWithBuses.vehicles" class="table table-striped mt-1 border-black">
+    <thead >
+        <tr >
+            <th>Linija</th>
+            <th>Broj stanica</th>
+            <th>Vreme</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let bus of buses">
+            <td>{{bus.lineNumber}}</td>
+            <td>{{bus.stationsBetween}}</td>
+            <td>{{bus.secondsLeft*1000 | date:'mm:ss'}} min.</td>
+        </tr>
+    </tbody>
+</table>
