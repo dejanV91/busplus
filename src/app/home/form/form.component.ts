@@ -34,7 +34,7 @@ export class FormComponent implements OnChanges {
   @ViewChild('inputByNameStation') inputByNameStation!: NgbTypeahead;
   @Input() busStations: BusStation[] = [];
   
-  @Output() brojStanice:EventEmitter<string>= new EventEmitter();
+  @Output() brojStaniceOrIme:EventEmitter<string>= new EventEmitter();
 
   ngOnChanges(): void {
     this.busStations.forEach((station) => {
@@ -55,17 +55,23 @@ export class FormComponent implements OnChanges {
     const inputFocus$ = this.focus$;
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
       map((term) =>
-        (term === ''
+        { return (term === ''
           ? this.stationsNames
           : this.stationsNames.filter(
               (v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1
             )
-        ).slice(0, 5)
-      )
+        ).slice(0, 8)
+      })
     );
   };
 
   onSubmit(){
-    this.brojStanice.emit(this.form.value.broj || '');
+    if(this.form.value.tip == 'broj') {
+      this.brojStaniceOrIme.emit(this.form.value.broj || '');
+    }else{
+      let naziv = this.searchNameStation;
+      let matchedString = naziv!.match(/\((\d+)\)/);
+      this.brojStaniceOrIme.emit(matchedString?.[1] || '');
+    }
   }
 }

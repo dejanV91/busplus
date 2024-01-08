@@ -16,10 +16,10 @@ export class HomeComponent implements OnInit {
   constructor(private service: BusplusService) {}
 
   ngOnInit(): void {
-    this.getStation();
+    this.getStations();
   }
 
-  getStation(){
+  getStations(){
     this.service.getStations().subscribe({
       next: (stations: BusStation[]) => {
         this.busStations = stations;
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  changeBrojStanice(brojStanice:string){
+  changeBrojStaniceOrIme(brojStanice:string){
     this.idStanice = brojStanice
      this.getStationWithBuses()
    }

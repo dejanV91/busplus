@@ -34,6 +34,7 @@
             type="text"
             class="form-control"
             [(ngModel)]="searchNameStation"
+            [ngModelOptions]="{standalone:true}"
             [ngbTypeahead]="onSearchName"
             (focus)="focus$.next($any($event).target.value)"
             (click)="click$.next($any($event).target.value)"
