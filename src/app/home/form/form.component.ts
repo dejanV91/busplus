@@ -23,6 +23,7 @@ export class FormComponent implements OnChanges {
   stationsNames: string[] = [];
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
+  currentStation = '';
 
   form = new FormGroup({
     tip: new FormControl('broj'),
@@ -68,6 +69,7 @@ export class FormComponent implements OnChanges {
   onSubmit(){
     if(this.form.value.tip == 'broj') {
       this.brojStaniceOrIme.emit(this.form.value.broj || '');
+      this.currentStation = this.form.value.broj || '';
     }else{
       let naziv = this.searchNameStation;
       let matchedString = naziv!.match(/\((\d+)\)/);

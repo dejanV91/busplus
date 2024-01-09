@@ -20,7 +20,7 @@ import { BusplusService } from 'src/app/services/busplus.service';
   styleUrls: ['./map.component.css'],
 })
 export class MapComponent implements AfterViewInit,OnChanges {
-
+  
   @ViewChild('map') private mapContainer!: ElementRef<HTMLElement>;
   map:any;
 
@@ -38,7 +38,15 @@ export class MapComponent implements AfterViewInit,OnChanges {
     }).addTo(this.map);
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(): void {    
+   let currentId = '';
+    if (currentId != this.busStationWithBuses.id) {
+      this.map.eachLayer((layer:any) => {
+        if (layer instanceof L.Marker) {
+          layer.remove();
+        }
+      })
+    }
     if (this.busStationWithBuses.coords.length) {
       //find station
       this.findStation(this.busStationWithBuses.coords[0],this.busStationWithBuses.coords[1]);
@@ -47,9 +55,9 @@ export class MapComponent implements AfterViewInit,OnChanges {
      this.busStationWithBuses.vehicles.forEach((bus:Bus)=>{
       this.findBus(bus);
      })
-     
-
     }
+
+    currentId = this.busStationWithBuses.id;
   }
 
   findStation(x:string,y:string){
@@ -74,8 +82,6 @@ export class MapComponent implements AfterViewInit,OnChanges {
     .addTo(this.map)
     .bindPopup(`${bus.lineNumber}`)
     .bindTooltip(`${bus.lineNumber}`).openTooltip();
-
-    
   }
 
 

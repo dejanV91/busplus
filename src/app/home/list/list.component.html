@@ -1,4 +1,4 @@
-<table *ngIf="busStationWithBuses.vehicles" class="table table-striped mt-1 border-black">
+<table *ngIf="busStationWithBuses.vehicles && !error" class="table table-striped mt-1 border-black">
     <thead >
         <tr >
             <th>Linija</th>
@@ -14,3 +14,4 @@
         </tr>
     </tbody>
 </table>
+<h2 *ngIf="error">Nije lepo ime ili broj stanice upisano, probaj ponovo</h2>

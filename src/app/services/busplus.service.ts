@@ -6,8 +6,6 @@ import { BusStationWithBuses } from '../models/busStationWithBuses';
 
 const baseUrl = 'https://bgpp.fly.dev/api/stations/bg';
 
-// https://bgpp.fly.dev/api/stations/bg/search?id=1122
-
 @Injectable({
   providedIn: 'root',
 })
@@ -24,7 +22,7 @@ export class BusplusService {
 
   getStationAndBuses(idStanice:string):Observable<BusStationWithBuses>{
     return this.http.get(`${baseUrl}/search?id=${idStanice}`).pipe(map((json:any)=>{
-      return new BusStationWithBuses(json);
+      return new BusStationWithBuses(json) ;
     }))
   }
 }

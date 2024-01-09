@@ -12,6 +12,7 @@ export class HomeComponent implements OnInit {
   busStations: BusStation[] = [];
   busStationWithBuses:BusStationWithBuses = new BusStationWithBuses();
   idStanice:string='';
+  error = false;
 
   constructor(private service: BusplusService) {}
 
@@ -35,9 +36,10 @@ export class HomeComponent implements OnInit {
   getStationWithBuses(){
     this.service.getStationAndBuses(this.idStanice).subscribe({
       next: (stationAndBuses)=> {
-        console.log(stationAndBuses);
+        this.error = false
         this.busStationWithBuses = stationAndBuses
-      }
+      },
+      error: (err) => this.error = true
     })
   }
 

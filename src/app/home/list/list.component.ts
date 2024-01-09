@@ -12,12 +12,14 @@ export class ListComponent implements OnChanges {
   buses:Bus[]=[];
 
   @Input() busStationWithBuses:BusStationWithBuses = new BusStationWithBuses();
+  @Input() error!:boolean;
+
 
   ngOnChanges(): void {
     if (this.busStationWithBuses.vehicles) {
       this.buses = this.busStationWithBuses.vehicles.sort((a:Bus,b:Bus)=>
-        a.stationsBetween - b.stationsBetween
-      ).slice(0,15);
+        a.secondsLeft - b.secondsLeft
+      ).slice(0,10);
     }
   }
 
