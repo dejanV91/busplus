@@ -20,7 +20,7 @@ export class ListComponent implements OnChanges {
       this.buses = this.busStationWithBuses.vehicles.sort((a:Bus,b:Bus)=>
         a.secondsLeft - b.secondsLeft
       ).slice(0,10);
-    }
+    }    
   }
 
 }

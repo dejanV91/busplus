@@ -12,7 +12,8 @@ export class HomeComponent implements OnInit {
   busStations: BusStation[] = [];
   busStationWithBuses:BusStationWithBuses = new BusStationWithBuses();
   idStanice:string='';
-  error = false;
+  error:boolean = false;
+  
 
   constructor(private service: BusplusService) {}
 
@@ -28,18 +29,20 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  changeBrojStaniceOrIme(brojStanice:string){
-    this.idStanice = brojStanice
-     this.getStationWithBuses()
+  changeBrojStaniceOrIme(brojStanice:string){   
+    this.idStanice = brojStanice;
+     this.getStationWithBuses();
    }
 
   getStationWithBuses(){
     this.service.getStationAndBuses(this.idStanice).subscribe({
       next: (stationAndBuses)=> {
-        this.error = false
-        this.busStationWithBuses = stationAndBuses
+          this.error = false;
+          this.busStationWithBuses = stationAndBuses;          
       },
-      error: (err) => this.error = true
+      error:(err)=>{
+        this.error = true;
+      }
     })
   }
 

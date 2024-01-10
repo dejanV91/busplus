@@ -22,7 +22,7 @@ export class BusplusService {
 
   getStationAndBuses(idStanice:string):Observable<BusStationWithBuses>{
     return this.http.get(`${baseUrl}/search?id=${idStanice}`).pipe(map((json:any)=>{
-      return new BusStationWithBuses(json) ;
+      return new BusStationWithBuses(json) || null;
     }))
   }
 }
