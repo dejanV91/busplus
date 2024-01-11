@@ -1,4 +1,4 @@
-import {  Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import {  Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -20,12 +20,13 @@ import { BusStationWithBuses } from 'src/app/models/busStationWithBuses';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css'],
 })
-export class FormComponent implements OnChanges {
+export class FormComponent implements OnChanges,OnInit {
   searchNameStation!: string;
   stationsNames: string[] = [];
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
   currentStation = '';
+  loading = true;
   
 
   form = new FormGroup({
@@ -47,6 +48,12 @@ export class FormComponent implements OnChanges {
     this.busStations.forEach((station) => {
       this.stationsNames.push(station.name + ' ' + '(' + station.id + ')');  
     }); 
+  }
+
+  ngOnInit(): void {
+    setTimeout(()=>{
+      this.loading = false;
+    },3000)
   }
 
   formChange(){

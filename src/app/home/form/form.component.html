@@ -42,8 +42,10 @@
           />
         </div>
         <!-- search by name of station END-->
+        
         <div class="d-flex justify-content-center gap-3  p-3">
           <button 
+            *ngIf="!loading; else loadingDiv" 
             [disabled]="(this.form.value.broj == this.currentStation && this.currentStation)" 
             (click)="onSubmit()" 
             type="button" 
@@ -63,3 +65,7 @@
     </div>
   </div>
 </div>
+
+<ng-template #loadingDiv class="spinner-border" role="status">
+  <span class="sr-only">Loading...</span>
+</ng-template>
