@@ -49,6 +49,12 @@ export class FormComponent implements OnChanges {
     }); 
   }
 
+  formChange(){
+    if (this.form.value.tip == 'naziv') {
+      this.currentStation = '';
+    }
+  }
+
   onSearchName: OperatorFunction<any, readonly any[]> = (
     text$: Observable<any>
   ) => {
