@@ -44,7 +44,7 @@
         <!-- search by name of station END-->
         <div class="d-flex justify-content-center gap-3  p-3">
           <button 
-            [disabled]="isDisabledTraziBtn()" 
+            [disabled]="this.form.value.broj == this.currentStation && this.currentStation" 
             (click)="onSubmit()" 
             type="button" 
             class="btn btn-primary w-25"

@@ -77,32 +77,13 @@ export class FormComponent implements OnChanges {
       this.brojStaniceOrIme.emit(this.form.value.broj || '');
       this.currentStation = this.form.value.broj || '';      
     }else{
-      this.brojStaniceOrIme.emit(
-        getIdStationFromFullNameStation(this.searchNameStation || '')
-      );
-      this.currentStation = getIdStationFromFullNameStation(this.searchNameStation || '');
-    }
-  }
-
-  isDisabledTraziBtn(){
-    if (this.form.value.broj == this.currentStation && this.currentStation && this.form.value.tip=="broj") {
-      return true;
-    }
-    if (
-      getIdStationFromFullNameStation(this.searchNameStation || '') == this.currentStation &&
-      this.searchNameStation &&
-      this.form.value.tip == 'naziv') {
-        return true;
-    }else{
-      return false;
+      let naziv = this.searchNameStation;
+      let matchedString = naziv!.match(/\((\d+)\)/);
+      this.brojStaniceOrIme.emit(matchedString?.[1] || '');
     }
   }
 }
 
-function getIdStationFromFullNameStation(searchNameStation:string){
-  let naziv = searchNameStation;
-  let matchedString = naziv!.match(/\((\d+)\)/);
-  return matchedString?.[1] || '';
-}
+
 
 
