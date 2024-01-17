@@ -18,7 +18,7 @@ Demo: [Busplus](https://dejanv91.github.io/busplus)
 
 ### Stack:
 
-- Language: **HTML5**, **CSS3**, **TypeScript**
+- **HTML5**, **CSS3**, **Bootstrap**, **TypeScript**
 
 ### Package Manager:
 
