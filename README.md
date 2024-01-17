@@ -8,7 +8,7 @@ Busplus je aplikacija koja vam omogućava da pratite lokaciju autobusa u realnom
 
 ## Links 📌
 
-Demo: [Busplus](https://dejanv91.github.io/busplus/)
+Demo: [Busplus](https://dejanv91.github.io/busplus)
 
 ## Built with 🛠️
 
